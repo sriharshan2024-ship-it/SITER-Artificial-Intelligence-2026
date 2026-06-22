@@ -3,259 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Electricity Invoice</title>
+    <title>Electricity Bill Calculator</title>
     <style>
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f4f6f9;
-            color: #333;
-        }
-
-        .invoice-card {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-        }
-
-        .header {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            border-bottom: 3px solid #1a73e8;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-
-        .company-logo h1 {
-            color: #1a73e8;
+            height: 100vh;
             margin: 0;
-            font-size: 28px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
-
-        .company-logo p {
-            margin: 5px 0 0 0;
-            font-size: 14px;
+        .bill-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
             color: #666;
-        }
-
-        .invoice-title {
-            text-align: right;
-        }
-
-        .invoice-title h2 {
-            margin: 0;
-            color: #202124;
-            font-size: 24px;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            font-size: 14px;
-            text-transform: uppercase;
-            color: #1a73e8;
-            margin-bottom: 10px;
             font-weight: bold;
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 5px;
         }
-
-        .info-block p {
-            margin: 5px 0;
-            font-size: 15px;
-            line-height: 1.4;
-        }
-
-        .info-block span {
-            font-weight: 600;
-            color: #5f6368;
-        }
-
-        .bill-table {
+        input[type="number"] {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
         }
-
-        .bill-table th {
-            background-color: #f8f9fa;
-            color: #202124;
-            text-align: left;
+        button {
+            width: 100%;
             padding: 12px;
-            font-weight: 600;
-            border-bottom: 2px solid #e0e0e0;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
         }
-
-        .bill-table td {
-            padding: 12px;
-            border-bottom: 1px solid #edeff1;
-            font-size: 15px;
+        button:hover {
+            background-color: #218838;
         }
-
-        .text-right {
-            text-align: right;
+        .result-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            display: none;
         }
-
-        .total-section {
-            float: right;
-            width: 300px;
-            margin-top: 10px;
-        }
-
-        .total-row {
+        .result-item {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
+            margin-bottom: 8px;
             font-size: 15px;
         }
-
-        .total-row.final {
-            border-top: 2px solid #1a73e8;
-            font-size: 18px;
-            font-weight: bold;
-            color: #1a73e8;
-            padding-top: 12px;
+        .result-item:last-child {
+            margin-bottom: 0;
         }
-
-        .footer {
-            clear: both;
-            margin-top: 50px;
-            text-align: center;
-            font-size: 13px;
-            color: #70757a;
-            border-top: 1px solid #e0e0e0;
-            padding-top: 20px;
-        }
-
-        .badge {
-            background-color: #e6f4ea;
-            color: #137333;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
+        .bold {
             font-weight: bold;
+            color: #333;
         }
     </style>
 </head>
 <body>
 
-<div class="invoice-card">
-    <!-- Header -->
-    <div class="header">
-        <div class="company-logo">
-            <h1>Apex Power Corp</h1>
-            <p>Reliable Energy Solutions</p>
-        </div>
-        <div class="invoice-title">
-            <h2>ELECTRICITY BILL</h2>
-            <p style="margin: 5px 0 0 0; color: #5f6368;">Bill No: #EB-2026-8941</p>
-        </div>
+<div class="bill-container">
+    <h2>Electricity Bill</h2>
+    
+    <div class="input-group">
+        <label for="totalPrice">Total Price ($):</label>
+        <input type="number" id="totalPrice" placeholder="Enter total amount" min="0" step="0.01">
     </div>
-
-    <!-- Consumer & Bill Information Grid -->
-    <div class="grid-container">
-        <div class="info-block">
-            <div class="section-title">Consumer Details</div>
-            <p><span>Name:</span> John Doe</p>
-            <p><span>Account No:</span> 9874561230</p>
-            <p><span>Address:</span> 123 Innovation Way, Tech District</p>
-            <p><span>Meter Number:</span> MTR-77491A</p>
-        </div>
-        <div class="info-block">
-            <div class="section-title">Billing Summary</div>
-            <p><span>Bill Date:</span> June 15, 2026</p>
-            <p><span>Due Date:</span> July 02, 2026</p>
-            <p><span>Billing Period:</span> May 14 - June 14, 2026</p>
-            <p><span>Status:</span> <span class="badge">UNPAID</span></p>
-        </div>
+    
+    <div class="input-group">
+        <label for="totalUnits">Number of Units:</label>
+        <input type="number" id="totalUnits" placeholder="Enter total units" min="1">
     </div>
-
-    <!-- Meter Reading & Usage Details -->
-    <div class="grid-container">
-        <div class="info-block" style="grid-column: span 2;">
-            <div class="section-title">Consumption History</div>
-            <table style="width: 100%; font-size: 14px;">
-                <tr>
-                    <td><strong>Previous Reading:</strong> 14,250 kWh</td>
-                    <td><strong>Current Reading:</strong> 14,700 kWh</td>
-                    <td><strong>Total Units Consumed:</strong> 450 kWh</td>
-                </tr>
-            </table>
+    
+    <button onclick="generateBill()">Generate Bill</button>
+    
+    <div class="result-box" id="resultBox">
+        <div class="result-item">
+            <span>Total Units:</span>
+            <span id="resUnits" class="bold">0</span>
         </div>
-    </div>
-
-    <!-- Charges Breakdown Table -->
-    <table class="bill-table">
-        <thead>
-            <tr>
-                <th>Description of Charges</th>
-                <th class="text-right">Rate / Base</th>
-                <th class="text-right">Amount ($)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Fixed Service Charge (Monthly base rate)</td>
-                <td class="text-right">Flat Rate</td>
-                <td class="text-right">15.00</td>
-            </tr>
-            <tr>
-                <td>Energy Consumption Charge (Tier 1 - First 200 Units)</td>
-                <td class="text-right">200 kWh @ $0.12</td>
-                <td class="text-right">24.00</td>
-            </tr>
-            <tr>
-                <td>Energy Consumption Charge (Tier 2 - Next 250 Units)</td>
-                <td class="text-right">250 kWh @ $0.15</td>
-                <td class="text-right">37.50</td>
-            </tr>
-            <tr>
-                <td>State Environmental Franchise Tax</td>
-                <td class="text-right">5% of Energy</td>
-                <td class="text-right">3.08</td>
-            </tr>
-            <tr>
-                <td>Municipal Grid Maintenance Levy</td>
-                <td class="text-right">Flat Fee</td>
-                <td class="text-right">4.50</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <!-- Totals Section -->
-    <div class="total-section">
-        <div class="total-row">
-            <span>Subtotal:</span>
-            <span>$84.08</span>
+        <div class="result-item">
+            <span>Cost Per Unit:</span>
+            <span id="resCostPerUnit" class="bold">$0.00</span>
         </div>
-        <div class="total-row">
-            <span>Taxes & Regulatory Fees:</span>
-            <span>$4.20</span>
+        <hr style="border: 0; border-top: 1px solid #ccc; margin: 10px 0;">
+        <div class="result-item" style="font-size: 18px;">
+            <span class="bold">Total Bill:</span>
+            <span id="resTotal" class="bold" style="color: #28a745;">$0.00</span>
         </div>
-        <div class="total-row final">
-            <span>Total Payable:</span>
-            <span>$88.28</span>
-        </div>
-    </div>
-
-    <!-- Footer Note -->
-    <div class="footer">
-        <p>Thank you for being a valued customer. Please pay your bill before the due date to avoid a 1.5% late fee.</p>
-        <p><strong>Support:</strong> 1-800-555-APEX | <strong>Email:</strong> billing@://example.com</p>
     </div>
 </div>
 
+<script>
+    function generateBill() {
+        const price = parseFloat(document.getElementById('totalPrice').value);
+        const units = parseFloat(document.getElementById('totalUnits').value);
+        const resultBox = document.getElementById('resultBox');
+
+        // Validation to ensure fields are not empty or negative
+        if (isNaN(price) || isNaN(units) || units <= 0 || price < 0) {
+            alert("Please enter valid numbers. Units must be greater than 0.");
+            return;
+        }
+
+        // Calculate cost per unit
+        const costPerUnit = price / units;
+
+        // Display the results in the HTML
+        document.getElementById('resUnits').innerText = units;
+        document.getElementById('resCostPerUnit').innerText = "$" + costPerUnit.toFixed(2);
+        document.getElementById('resTotal').innerText = "$" + price.toFixed(2);
+
+        // Show the result container
+        resultBox.style.display = "block";
+    }
+</script>
+
 </body>
 </html>
+
